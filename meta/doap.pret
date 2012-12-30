@@ -1,0 +1,18 @@
+# This file contains general metadata about the project.
+
+@prefix : <http://usefulinc.com/ns/doap#>.
+
+`MooX-ClassAttribute`
+	:programming-language "Perl" ;
+	:shortdesc            "declare class attributes Moose-style... but without Moose";
+	:homepage             <https://metacpan.org/release/MooX-ClassAttribute>;
+	:download-page        <https://metacpan.org/release/MooX-ClassAttribute>;
+	:bug-database         <http://rt.cpan.org/Dist/Display.html?Queue=MooX-ClassAttribute>;
+	:created              2012-12-27;
+	:license              <http://dev.perl.org/licenses/>;
+	:maintainer           cpan:TOBYINK;
+	:developer            cpan:TOBYINK.
+
+<http://dev.perl.org/licenses/>
+	dc:title  "the same terms as the perl 5 programming language system itself".
+
