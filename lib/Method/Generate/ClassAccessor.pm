@@ -1,4 +1,4 @@
-package Method::Generate::Accessor::Classy;
+package Method::Generate::ClassAccessor;
 
 use 5.008;
 use strict;
@@ -7,8 +7,8 @@ no warnings qw( void once uninitialized numeric );
 
 BEGIN {
 	no warnings 'once';
-	$Method::Generate::Accessor::Classy::AUTHORITY = 'cpan:TOBYINK';
-	$Method::Generate::Accessor::Classy::VERSION   = '0.001';
+	$Method::Generate::ClassAccessor::AUTHORITY = 'cpan:TOBYINK';
+	$Method::Generate::ClassAccessor::VERSION   = '0.001';
 }
 
 use B 'perlstring';

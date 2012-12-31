@@ -81,8 +81,8 @@ sub _class_accessor_maker_for
 {
 	my ($me, $target) = @_;
 	$CLASS{$target}{class_accessor} ||= do {
-		require Method::Generate::Accessor::Classy;
-		'Method::Generate::Accessor::Classy'->new;
+		require Method::Generate::ClassAccessor;
+		'Method::Generate::ClassAccessor'->new;
 	};
 }
 

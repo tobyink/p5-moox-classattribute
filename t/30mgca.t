@@ -2,9 +2,9 @@ use strict;
 use warnings;
 use Test::More;
 
-use Method::Generate::Accessor::Classy;
+use Method::Generate::ClassAccessor;
 use Sub::Defer;
-use constant Gen => 'Method::Generate::Accessor::Classy';
+use constant Gen => 'Method::Generate::ClassAccessor';
 use constant Pkg => 'Local::Test::Package';
 
 my $generator = Gen->new;
