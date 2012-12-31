@@ -18,7 +18,6 @@ BEGIN { *ROLE = \%Role::Tiny::INFO }
 our %ROLE;
 BEGIN { *CLASS = \%Moo::MAKERS }
 our %CLASS;
-
 our %ATTRIBUTES;
 
 sub import
@@ -86,96 +85,13 @@ sub _class_accessor_maker_for
 	};
 }
 
-my %did_setup;
 sub _setup_inflation
 {
 	my ($me, $target) = @_;
-	return if $did_setup{$target}++;
-#	on_inflation
-#		{ $me->_on_inflation($target, @_) }
-#		$target;
-}
-
-my $warning;
-sub _on_inflation
-{
-	my ($me, $target, $meta) = @_;
-	
-	eval { require MooseX::ClassAttribute } or do {
-		carp <<WARNING unless $warning++; return;
-***
-*** MooX::ClassAttribute and Moose, but MooseX::ClassAttribute is not
-*** available. It is strongly recommended that you install this module.
-***
-WARNING
-	};
-	
-	require Moose::Util::MetaRole;
-	if ( is_role($meta->name) )
-	{
-		$meta = Moose::Util::MetaRole::apply_metaroles(
-			for             => $meta->name,
-			role_metaroles  => {
-				role                 => ['MooseX::ClassAttribute::Trait::Role'],
-				application_to_class => ['MooseX::ClassAttribute::Trait::Application::ToClass'],
-				application_to_role  => ['MooseX::ClassAttribute::Trait::Application::ToRole'],
-			},
-		);
-	}
-	else
-	{
-		$meta = Moose::Util::MetaRole::apply_metaroles(
-			for             => $meta->name,
-			class_metaroles => {
-				class => ['MooseX::ClassAttribute::Trait::Class', 'MooseX::ClassAttribute::Hack']
-			},
-		);
-	}
-	
-	my $attrs = $ATTRIBUTES{$target} || [];
-	for (my $i = 0; $i < @$attrs; $i+=2)
-	{
-		my $name = $attrs->[$i+0];
-		my $spec = $attrs->[$i+1];
-		MooseX::ClassAttribute::class_has(
-			$meta,
-			$name,
-			$me->_sanitize_spec($spec),
-		);
-	}
-}
-
-my %ok_options = map { ;$_=>1 } qw(
-	is reader writer accessor clearer predicate handles
-	required isa does coerce trigger
-	default builder lazy_build lazy
-	documentation
-);
-
-sub _sanitize_spec
-{
-	my ($me, $spec) = @_;
-	my @return;
-	for my $key (%$spec)
-	{
-		next unless $ok_options{$key};
-		push @return, $key, $spec->{$key};
-	}
-	return (
-		@return,
-		definition_context => { package => __PACKAGE__ },
-	);
-}
-
-{
-	package MooseX::ClassAttribute::Hack;
-	use Moo::Role;
-	around _post_add_class_attribute => sub {
-		my $orig = shift;
-		my $self = shift;
-		return if $self->definition_context->{package} eq 'MooseX::ClassAttribute';
-		$self->$orig(@_);
-	};
+	on_inflation {
+		require MooX::ClassAttribute::HandleMoose;
+		$me->_on_inflation($target, @_)
+	} $target;
 }
 
 1;
@@ -236,12 +152,13 @@ out yet.
 
 =item *
 
-When Moo classes are inflated to Moose classes, it would be nice to also
-inflate MooX::ClassAttribute attributes to MooseX::ClassAttribute attributes,
-however I have not had much luck with that yet.
+When Moo classes are inflated to Moose classes, this module will I<attempt>
+to load MooseX::ClassAttribute, and use that to provide class attribute
+meta objects.
 
-Currently accessors installed by this module will just appear as plain old
-methods in Moose's introspection API.
+If MooseX::ClassAttribute cannot be loaded, a loud warning will be printed,
+and the inflation will fall back to representing class attribute accessors
+as plain old class methods.
 
 =back
 

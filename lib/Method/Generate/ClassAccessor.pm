@@ -72,3 +72,41 @@ sub _generate_simple_clear
 
 1;
 
+__END__
+
+=head1 NAME
+
+Method::Generate::ClassAccessor - generate class accessor method
+
+=head1 DESCRIPTION
+
+For an idea of how this works, see the very fine documentation for
+L<Method::Generate::Accessor>.
+
+=head1 BUGS
+
+Please report any bugs to
+L<http://rt.cpan.org/Dist/Display.html?Queue=MooX-ClassAttribute>.
+
+=head1 SEE ALSO
+
+L<Method::Generate::Accessor>,
+L<MooX::ClassAttribute>.
+
+=head1 AUTHOR
+
+Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
+
+=head1 COPYRIGHT AND LICENCE
+
+This software is copyright (c) 2012 by Toby Inkster.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=head1 DISCLAIMER OF WARRANTIES
+
+THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
+MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+

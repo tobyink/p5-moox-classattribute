@@ -34,11 +34,33 @@ is(WithFoo->foo, 42);
 
 is(WithBar->bar, "WithBar XYZ");
 
-#unless (eval { require MooseX::ClassAttribute })
-#{
-#	diag "no MooseX::ClassAttribute; no further tests";
-#	done_testing;
-#	exit;
-#}
+unless (eval { require MooseX::ClassAttribute })
+{
+	diag "no MooseX::ClassAttribute; no further tests";
+	done_testing;
+	exit;
+}
+
+my $_meta = sub {
+	my $pkg = shift;
+	require Class::MOP;
+	Class::MOP::class_of($pkg);
+};
+
+can_ok(Foo->$_meta, 'get_class_attribute');
+ok(Foo->$_meta->get_class_attribute('foo'));
+ok(not Foo->$_meta->get_class_attribute('foo')->has_default);
+
+can_ok(Bar->$_meta, 'get_class_attribute');
+ok(Bar->$_meta->get_class_attribute('bar'));
+ok(Bar->$_meta->get_class_attribute('bar')->has_default);
+
+can_ok(WithFoo->meta, 'get_class_attribute');
+ok(WithFoo->meta->get_class_attribute('foo'));
+ok(not WithFoo->meta->get_class_attribute('foo')->has_default);
+
+can_ok(WithBar->meta, 'get_class_attribute');
+ok(WithBar->meta->get_class_attribute('bar'));
+ok(WithBar->meta->get_class_attribute('bar')->has_default);
 
 done_testing;
