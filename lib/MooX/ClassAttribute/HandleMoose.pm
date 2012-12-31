@@ -22,15 +22,15 @@ BEGIN {
 		my ($me, $target, $args) = @_;
 		my $meta = $args->[0];
 		
-		eval { require MooseX::ClassAttribute } or do {
-			carp <<WARNING unless $warning++; return;
+		eval { require MooseX::ClassAttribute }
+			or do { carp <<WARNING unless $warning++; return };
 ***
 *** MooX::ClassAttribute and Moose, but MooseX::ClassAttribute is not
 *** available. It is strongly recommended that you install this module.
 ***
 WARNING
-		};
-		
+	
+	1;#meh
 		require Moose::Util::MetaRole;
 		if ( is_role($meta->name) )
 		{

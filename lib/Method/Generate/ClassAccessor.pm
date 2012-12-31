@@ -80,8 +80,24 @@ Method::Generate::ClassAccessor - generate class accessor method
 
 =head1 DESCRIPTION
 
-For an idea of how this works, see the very fine documentation for
-L<Method::Generate::Accessor>.
+This class inherits from L<Method::Generate::Accessor>; see the very fine
+documentation for that module.
+
+This class overrides the following methods:
+
+=over
+
+=item C<generate_method>
+
+=item C<_generate_simple_get>
+
+=item C<_generate_core_set>
+
+=item C<_generate_simple_has>
+
+=item C<_generate_simple_clear>
+
+=back
 
 =head1 BUGS
 
