@@ -110,7 +110,7 @@ MooX::ClassAttribute - declare class attributes Moose-style... but without Moose
       use MooX::ClassAttribute;
       class_has ua => (
          is      => 'rw',
-         default => { LWP::UserAgent->new },
+         default => sub { LWP::UserAgent->new },
       );
    }
    
