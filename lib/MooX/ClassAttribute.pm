@@ -188,7 +188,62 @@ MooX::ClassAttribute - declare class attributes Moose-style... but without Moose
 
 =head1 SYNOPSIS
 
+   {
+      package Foo;
+      use Moo;
+      use MooX::ClassAttribute;
+      class_has ua => (
+         is      => 'rw',
+         default => { LWP::UserAgent->new },
+      );
+   }
+   
+   my $r = Foo->ua->get("http://www.example.com/");
+
 =head1 DESCRIPTION
+
+This module adds support for class attributes to L<Moo>. Class attributes
+are attributes whose values are not associated with any particular instance
+of the class.
+
+For example, the C<Person> class might have a class attribute "binomial_name";
+its value "Homo sapiens" is not associated with any particular individual, but
+the class as a whole.
+
+   say Person->binomial_name;   # "Homo sapiens"
+   my $bob = Person->new;
+   say $bob->binomial_name;     # "Homo sapiens"
+   
+   my $alice = Person->new;
+   $alice->binomial_name("H. sapiens");
+   say $bob->binomial_name;     # "H. sapiens"
+
+Class attributes may be defined in roles, however they cannot be called as
+methods using the role package name. Instead the role must be composed with
+a class; the class attributes will be installed into that class.
+
+This module mostly tries to behave like L<MooseX::ClassAttribute>.
+
+=head1 CAVEATS
+
+=over
+
+=item *
+
+Overriding class attributes and their accessors in subclasses is not yet
+supported. The implementation, and expected behaviour hasn't been figured
+out yet.
+
+=item *
+
+When Moo classes are inflated to Moose classes, it would be nice to also
+inflate MooX::ClassAttribute attributes to MooseX::ClassAttribute attributes,
+however I have not had much luck with that yet.
+
+Currently accessors installed by this module will just appear as plain old
+methods in Moose's introspection API.
+
+=back
 
 =head1 BUGS
 
@@ -196,6 +251,9 @@ Please report any bugs to
 L<http://rt.cpan.org/Dist/Display.html?Queue=MooX-ClassAttribute>.
 
 =head1 SEE ALSO
+
+L<Moo>,
+L<MooseX::ClassAttribute>.
 
 =head1 AUTHOR
 
@@ -207,7 +265,6 @@ This software is copyright (c) 2012 by Toby Inkster.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
-
 
 =head1 DISCLAIMER OF WARRANTIES
 
