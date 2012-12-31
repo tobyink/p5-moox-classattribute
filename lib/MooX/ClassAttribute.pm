@@ -160,6 +160,13 @@ If MooseX::ClassAttribute cannot be loaded, a loud warning will be printed,
 and the inflation will fall back to representing class attribute accessors
 as plain old class methods.
 
+=item *
+
+This module uses some pretty experimental techniques, especially to handle
+inflation. There are probably all sorts of bugs lurking. Don't let that
+scare you though; I'm usually pretty quick to fix bugs once they're reported.
+;-)
+
 =back
 
 =head1 BUGS
