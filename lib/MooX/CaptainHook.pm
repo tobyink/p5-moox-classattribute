@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 use Sub::Exporter::Progressive -setup => {
-	exports => [qw/ on_application on_inflation /],
+	exports => [qw/ on_application on_inflation is_role /],
 };
 
 BEGIN {
@@ -17,12 +17,24 @@ BEGIN {
 our %on_application;
 our %on_inflation;
 
+sub is_role
+{
+	my $package = shift;
+	require Role::Tiny;
+	return !!1 if exists $Role::Tiny::INFO{$package};
+	return !!0 if exists $Moo::MAKERS{$package};
+	if ($INC{'Class/MOP.pm'} and my $classof = 'Class::MOP'->can('class_of')) {
+		return !!1 if $classof->($package)->isa('Moose::Meta::Role');
+	}
+	return !!0;
+}
+
 {
 	my %already;
 	sub _fire
 	{
 		my (undef, $callbacks, $key, @args) = @_;
-		return if $already{$key}++;
+		return if defined $key && $already{$key}++;
 		return unless $callbacks;
 		for my $cb (@$callbacks)
 		{
@@ -47,7 +59,7 @@ use constant ON_APPLICATION => do {
 		
 		# This stuff is for internals...
 		push @{ $on_application{$package} ||= [] }, @{ $on_application{$role} || [] }
-			if exists $Role::Tiny::INFO{$package};
+			if MooX::CaptainHook::is_role($package);
 		push @{ $on_inflation{$package} ||= [] }, @{ $on_inflation{$role} || [] };
 	};
 	__PACKAGE__;
@@ -84,7 +96,7 @@ sub _inflated
 					);
 					
 					# This stuff is for internals...
-					if ($_[1]->isa('Moose::Meta::Role')) {
+					if (MooX::CaptainHook::is_role($_[1]->name)) {
 						push @{ $on_application{$package} ||= [] }, @{ $on_application{$role} || [] };
 						Moose::Util::MetaRole::apply_metaroles(
 							for            => $package,
@@ -124,7 +136,7 @@ use constant ON_INFLATION => do {
 				'MooX::CaptainHook'->can('_inflated'),
 				@{$on_inflation{$pkg}||[]}
 			],
-			"OnInflation: $pkg",
+			undef,
 			$meta,
 		);
 		return $meta;
@@ -181,7 +193,7 @@ consume that role.
 
 =over
 
-=item C<on_application>
+=item C<< on_application { BLOCK } >>
 
 The C<on_application> hook allows you to run a callback when your role
 is applied to a class or other role. Within the callback C<< $_[0] >>
@@ -193,10 +205,14 @@ may not be the same as the role where the hook was initially defined.
 Y; and role Y is consumed by class Z. Then the callback code will run
 twice, once with C<< @_ = qw(Y X) >> and once with C<< @_ = (Z Y) >>.)
 
-=item C<on_inflation>
+=item C<< on_inflation { BLOCK } >>
 
 The C<on_inflation> hook runs if your class or role is "inflated" to a
 full Moose class or role. C<< $_[0] >> is the associated metaclass.
+
+=item C<< is_role($package) >>
+
+Returns a boolean indicating whether the package is a role.
 
 =back
 
