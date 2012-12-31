@@ -36,4 +36,9 @@ is_deeply(
 	],
 );
 
+ok(
+	!$INC{'Moose.pm'},
+	'Did not accidentally load Moose',
+);
+
 done_testing;
