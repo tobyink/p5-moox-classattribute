@@ -1,0 +1,33 @@
+f`Makefile.PL`
+	dc:rightsHolder cpan:TOBYINK;
+	dc:license <http://dev.perl.org/licenses/>.
+
+f`meta/changes.pret`
+	dc:rightsHolder cpan:TOBYINK;
+	dc:license <http://dev.perl.org/licenses/>.
+
+f`meta/copyright.pret`
+	dc:rightsHolder cpan:TOBYINK;
+	dc:license <http://dev.perl.org/licenses/>.
+
+f`meta/doap.pret`
+	dc:rightsHolder cpan:TOBYINK;
+	dc:license <http://dev.perl.org/licenses/>.
+
+f`meta/makefile.pret`
+	dc:rightsHolder cpan:TOBYINK;
+	dc:license <http://dev.perl.org/licenses/>.
+
+f`meta/people.pret`
+	dc:rightsHolder cpan:TOBYINK;
+	dc:license <http://dev.perl.org/licenses/>.
+
+f`README`
+	dc:source m`MooX::ClassAttribute`;
+	dc:rightsHolder cpan:TOBYINK;
+	dc:license <http://dev.perl.org/licenses/>.
+
+f`Changes`
+	dc:source f`meta/changes.pret`;
+	dc:rightsHolder cpan:TOBYINK;
+	dc:license <http://dev.perl.org/licenses/>.
