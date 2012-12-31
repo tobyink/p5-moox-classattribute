@@ -33,13 +33,12 @@ sub is_role
 	my %already;
 	sub _fire
 	{
-		my (undef, $callbacks, $key, @args) = @_;
+		my (undef, $callbacks, $key, $args) = @_;
 		return if defined $key && $already{$key}++;
 		return unless $callbacks;
 		for my $cb (@$callbacks)
 		{
-			local $_ = $args[0];
-			$cb->(@args);
+			$cb->($args) for $args->[0];  # local $_ aliasing
 		}
 	}
 }
@@ -53,8 +52,7 @@ use constant ON_APPLICATION => do {
 		'MooX::CaptainHook'->_fire(
 			$on_application{$role},
 			"OnApplication: $package $role",
-			$package,
-			$role,
+			[ $package, $role ],
 		);
 		
 		# This stuff is for internals...
@@ -75,10 +73,11 @@ use constant ON_APPLICATION => do {
 # 
 sub _inflated
 {
-	my $meta = shift;
+	my $args = shift;
+	my $meta = $args->[0];
 	return unless $meta->isa('Moose::Meta::Role');
 	require Moose::Util::MetaRole;
-	Moose::Util::MetaRole::apply_metaroles(
+	$args->[0] = $meta = Moose::Util::MetaRole::apply_metaroles(
 		for            => $meta->name,
 		role_metaroles => {
 			role => eval q{
@@ -91,8 +90,7 @@ sub _inflated
 					'MooX::CaptainHook'->_fire(
 						$on_application{$role},
 						"OnApplication: $package $role",
-						$package,
-						$role,
+						[ $package, $role ],
 					);
 					
 					# This stuff is for internals...
@@ -130,16 +128,16 @@ use constant ON_INFLATION => do {
 	around inject_real_metaclass_for => sub
 	{
 		my ($orig, $pkg) = @_;
-		my $meta = $orig->($pkg);
+		my $args = [ scalar $orig->($pkg) ];
 		'MooX::CaptainHook'->_fire(
 			[
 				'MooX::CaptainHook'->can('_inflated'),
 				@{$on_inflation{$pkg}||[]}
 			],
 			undef,
-			$meta,
+			$args,
 		);
-		return $meta;
+		return $args->[0];
 	};
 	__PACKAGE__;
 };
@@ -196,19 +194,25 @@ consume that role.
 =item C<< on_application { BLOCK } >>
 
 The C<on_application> hook allows you to run a callback when your role
-is applied to a class or other role. Within the callback C<< $_[0] >>
+is applied to a class or other role. Within the callback C<< $_[0][0] >>
 is set to the name of the package that the role is being applied to.
 
-Also C<< $_[1] >> is set to the name of the role being applied, which
-may not be the same as the role where the hook was initially defined.
-(For example, when role X establishes a hook; role X is consumed by role
-Y; and role Y is consumed by class Z. Then the callback code will run
-twice, once with C<< @_ = qw(Y X) >> and once with C<< @_ = (Z Y) >>.)
+Also C<< $_[0][1] >> is set to the name of the role being applied, which
+may not be the same as the role where the hook was initially defined. (For
+example, when role X establishes a hook; role X is consumed by role Y; and
+role Y is consumed by class Z. Then the callback code will run twice, once
+with C<< $_[0] = [qw(Y X)] >> and once with C<< $_[0] = [qw(Z Y)] >>.)
+
+Altering the C<< $_[0] >> arrayref will alter what is passed to subsequent
+callbacks, so is not recommended.
 
 =item C<< on_inflation { BLOCK } >>
 
 The C<on_inflation> hook runs if your class or role is "inflated" to a
-full Moose class or role. C<< $_[0] >> is the associated metaclass.
+full Moose class or role. C<< $_[0][0] >> is the associated metaclass.
+
+Setting C<< $_[0][0] >> to a new meta object should "work" (whatever that
+means).
 
 =item C<< is_role($package) >>
 
@@ -217,7 +221,7 @@ Returns a boolean indicating whether the package is a role.
 =back
 
 Within callback codeblocks, C<< $_ >> is also available as a convenient
-alias to C<< $_[0] >>.
+alias to C<< $_[0][0] >>.
 
 =head2 Installing Hooks for Other Packages
 

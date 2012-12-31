@@ -69,7 +69,7 @@ sub _process_for_role
 {
 	my ($me, $target, $name, $spec) = @_;
 	on_application {
-		my ($applied_to) = @_;
+		my $applied_to = $_;
 		$me
 			-> _class_accessor_maker_for($applied_to)
 			-> generate_method($applied_to, $name, $spec);

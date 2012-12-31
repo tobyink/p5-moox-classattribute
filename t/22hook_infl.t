@@ -9,7 +9,7 @@ my @inflated;
 	use Moo;
 	use MooX::CaptainHook qw( on_inflation );
 	on_inflation {
-		push @inflated, sprintf("%s (%s)", $_->name, ref $_);
+		push @inflated, sprintf("%s (%s)", $_->name, $_->isa('Moose::Meta::Role')?'Role':'Class');
 	};
 }
 
@@ -18,7 +18,7 @@ my @inflated;
 	use Moo::Role;
 	use MooX::CaptainHook qw( on_inflation );	
 	on_inflation {
-		push @inflated, sprintf("%s (%s)", $_->name, ref $_);
+		push @inflated, sprintf("%s (%s)", $_->name, $_->isa('Moose::Meta::Role')?'Role':'Class');
 	};
 }
 
@@ -30,8 +30,8 @@ Class::MOP::class_of('Boo')->name;
 is_deeply(
 	[ sort @inflated ],
 	[
-		"Boo (Moose::Meta::Role)",
-		"Foo (Moose::Meta::Class)",
+		"Boo (Role)",
+		"Foo (Class)",
 	],
 ) or diag explain \@inflated;
 

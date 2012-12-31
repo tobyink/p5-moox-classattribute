@@ -10,7 +10,7 @@ my @output;
 	use MooX::CaptainHook qw(on_application);
 	
 	on_application {
-		push @output, "@_";
+		push @output, "@{$_[0]}";
 	};
 }
 
