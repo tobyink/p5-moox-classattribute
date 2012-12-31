@@ -5,6 +5,12 @@ use strict;
 use warnings;
 no warnings qw( void once uninitialized numeric );
 
+BEGIN {
+	no warnings 'once';
+	$Method::Generate::Accessor::Classy::AUTHORITY = 'cpan:TOBYINK';
+	$Method::Generate::Accessor::Classy::VERSION   = '0.001';
+}
+
 use B 'perlstring';
 
 use base qw(Method::Generate::Accessor);
@@ -14,7 +20,26 @@ sub generate_method
 	my ($self, $into, $name, $spec, $quote_opts) = @_;
 	local $Method::Generate::Accessor::CAN_HAZ_XS = 0; # sorry
 	$spec->{_classy} ||= $into;
-	$self->SUPER::generate_method($into, $name, $spec, $quote_opts);
+	my $r = $self->SUPER::generate_method($into, $name, $spec, $quote_opts);
+	
+	# Populate default value
+	unless ($spec->{lazy})
+	{
+		my $storage = do {
+			no strict 'refs';
+			\%{"$spec->{_classy}\::__ClassAttributeValues"};
+		};
+		if (my $default = $spec->{default})
+		{
+			$storage->{$name} = $default->($into);
+		}
+		elsif (my $builder = $spec->{builder})
+		{
+			$storage->{$name} = $into->$builder;
+		}
+	}
+	
+	return $r;
 }
 
 sub _generate_simple_get
