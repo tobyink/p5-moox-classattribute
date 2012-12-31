@@ -24,4 +24,8 @@ use MooX::ClassAttribute;
 ::pass();
 ::done_testing();
 
-
+q{
+	# CPANTS likes this...
+	use Test::Pod;
+	use Test::Pod::Coverage;
+} or 1;
