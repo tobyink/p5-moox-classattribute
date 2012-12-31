@@ -183,11 +183,13 @@ MooX::CaptainHook - hooks for MooX modules
 
 =head1 DESCRIPTION
 
-C<MooX::CaptainHook> provides a couple of hooks which may be of use to
+Although developed to support L<MooX::ClassAttribute>, 
+C<MooX::CaptainHook> provides a feature which may be of use to other 
 people writing Moo roles and MooX modules.
 
-Callback code for a role will be copied as hooks for any packages that
-consume that role.
+This module allows you to run callback code when various events happen 
+to Moo classes and roles. Callback code for a role will also be copied 
+as hooks for any packages that consume that role.
 
 =over
 
@@ -237,11 +239,11 @@ You can pass a package name as an optional second parameter:
 =head1 BUGS
 
 Please report any bugs to
-L<http://rt.cpan.org/Dist/Display.html?Queue=MooX-CaptainHook>.
+L<http://rt.cpan.org/Dist/Display.html?Queue=MooX-ClassAttribute>.
 
 =head1 SEE ALSO
 
-L<Moo>.
+L<Moo>, L<MooX::ClassAttribute>.
 
 =head1 AUTHOR
 
