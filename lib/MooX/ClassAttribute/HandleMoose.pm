@@ -6,7 +6,7 @@ use warnings;
 
 BEGIN {
 	$MooX::ClassAttribute::HandleMoose::AUTHORITY = 'cpan:TOBYINK';
-	$MooX::ClassAttribute::HandleMoose::VERSION   = '0.001';
+	$MooX::ClassAttribute::HandleMoose::VERSION   = '0.002';
 }
 
 {
@@ -129,7 +129,8 @@ WARNING
 
 ## This doesn't actually seem needed any more...
 #{
-#	package MooseX::ClassAttribute::Hack;
+#	package
+#  MooseX::ClassAttribute::Hack;
 #	use Moo::Role;
 #	around _post_add_class_attribute => sub {
 #		my $orig = shift;

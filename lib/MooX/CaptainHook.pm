@@ -11,7 +11,7 @@ use Sub::Exporter::Progressive -setup => {
 BEGIN {
 	no warnings 'once';
 	$MooX::CaptainHook::AUTHORITY = 'cpan:TOBYINK';
-	$MooX::CaptainHook::VERSION   = '0.001';
+	$MooX::CaptainHook::VERSION   = '0.002';
 }
 
 our %on_application;
@@ -45,6 +45,11 @@ sub is_role
 
 use constant ON_APPLICATION => do {
 	package MooX::CaptainHook::OnApplication;
+	BEGIN {
+		no warnings 'once';
+		$MooX::CaptainHook::OnApplication::AUTHORITY = 'cpan:TOBYINK';
+		$MooX::CaptainHook::OnApplication::VERSION   = '0.002';
+	}
 	use Moo::Role;
 	after apply_single_role_to_package => sub
 	{
@@ -82,6 +87,11 @@ sub _inflated
 		role_metaroles => {
 			role => eval q{
 				package MooX::CaptainHook::OnApplication::Moose;
+				BEGIN {
+					no warnings 'once';
+					$MooX::CaptainHook::OnApplication::Moose::AUTHORITY = 'cpan:TOBYINK';
+					$MooX::CaptainHook::OnApplication::Moose::VERSION   = '0.002';
+				}
 				use Moose::Role;
 				after apply => sub {
 					my $role    = $_[0]->name;
@@ -124,6 +134,11 @@ sub on_application (&;$)
 
 use constant ON_INFLATION => do {
 	package MooX::CaptainHook::OnInflation;
+	BEGIN {
+		no warnings 'once';
+		$MooX::CaptainHook::OnInflation::AUTHORITY = 'cpan:TOBYINK';
+		$MooX::CaptainHook::OnInflation::VERSION   = '0.002';
+	}
 	use Moo::Role;
 	around inject_real_metaclass_for => sub
 	{

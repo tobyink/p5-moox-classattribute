@@ -4,3 +4,8 @@
 	issued  2013-01-01;
 	label   "Initial release".
 
+`MooX-ClassAttribute 0.002 cpan:TOBYINK`
+	issued  2013-01-01;
+	changeset [
+		item "List dependencies."^^Packaging;
+	].
