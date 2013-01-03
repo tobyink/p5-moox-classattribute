@@ -259,6 +259,14 @@ You can pass a package name as an optional second parameter:
       ...;
    } 'Your::Role';
 
+=begin private
+
+=item ON_APPLICATION
+
+=item ON_INFLATION
+
+=end private
+
 =head1 BUGS
 
 Please report any bugs to
