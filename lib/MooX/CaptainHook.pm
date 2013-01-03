@@ -162,13 +162,19 @@ sub on_inflation (&;$)
 	my ($code, $pkg) = @_;
 	$pkg = caller unless defined $pkg;
 	push @{$on_inflation{$pkg}||=[]}, $_[0];
-	
+
 	return;
 }
 
-require Moo::HandleMoose;
-'Moo::Role'->apply_single_role_to_package('Moo::HandleMoose', ON_INFLATION)
-	unless Role::Tiny::does_role('Moo::HandleMoose', ON_INFLATION);
+{
+	package MooX::CaptainHook::HandleMoose::Hack;
+	use overload qw[bool] => sub { 0 };
+	sub DESTROY {
+		'Moo::Role'->apply_single_role_to_package('Moo::HandleMoose', MooX::CaptainHook::ON_INFLATION)
+			unless Role::Tiny::does_role('Moo::HandleMoose', MooX::CaptainHook::ON_INFLATION);
+	}
+	$Moo::HandleMoose::SETUP_DONE = bless [];
+}
 
 1;
 
