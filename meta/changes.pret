@@ -9,3 +9,9 @@
 	changeset [
 		item "List dependencies."^^Packaging;
 	].
+
+`MooX-ClassAttribute 0.003 cpan:TOBYINK`
+	issued  2013-01-03;
+	changeset [
+		item "Prevent MooX::CaptainHook from inadvertantly loading Moose."^^Bugfix;
+	].
