@@ -15,3 +15,9 @@
 	changeset [
 		item "Prevent MooX::CaptainHook from inadvertantly loading Moose."^^Bugfix;
 	].
+
+`MooX-ClassAttribute 0.004 cpan:TOBYINK`
+	issued  2013-01-03;
+	changeset [
+		item "Fix MooX::CaptainHook on_inflation fragility when Moose is loaded early."^^Bugfix;
+	].
