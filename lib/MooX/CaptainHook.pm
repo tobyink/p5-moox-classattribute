@@ -175,7 +175,10 @@ sub on_inflation (&;$)
 		'Moo::Role'->apply_single_role_to_package('Moo::HandleMoose', MooX::CaptainHook::ON_INFLATION)
 			unless Role::Tiny::does_role('Moo::HandleMoose', MooX::CaptainHook::ON_INFLATION);
 	}
-	$Moo::HandleMoose::SETUP_DONE = bless [];
+	if ($Moo::HandleMoose::SETUP_DONE)
+		{ __PACKAGE__->DESTROY }
+	else
+		{ $Moo::HandleMoose::SETUP_DONE ||= bless [] }
 }
 
 1;
