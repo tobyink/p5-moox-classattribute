@@ -12,7 +12,7 @@ BEGIN {
 use Carp;
 use Moo ();
 use Moo::Role ();
-use MooX::CaptainHook -all;
+use MooX::CaptainHook qw( on_application on_inflation is_role );
 
 BEGIN { *ROLE = \%Role::Tiny::INFO }
 our %ROLE;

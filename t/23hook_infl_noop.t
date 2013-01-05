@@ -23,7 +23,7 @@ use Test::More tests => 1;
 {
 	package Local::Role;
 	use Moo::Role;
-	use MooX::CaptainHook -all;
+	use MooX::CaptainHook qw( on_application on_inflation is_role );
 	
 	on_application { 1 };
 	on_inflation { 1 };
@@ -34,7 +34,7 @@ use Test::More tests => 1;
 {
 	package Local::Class;
 	use Moo; with 'Local::Role';
-	use MooX::CaptainHook -all;
+	use MooX::CaptainHook qw( on_application on_inflation is_role );
 	
 	on_application { 1 };
 	on_inflation { 1 };
