@@ -21,3 +21,9 @@
 	changeset [
 		item "Fix MooX::CaptainHook on_inflation fragility when Moose is loaded early."^^Bugfix;
 	].
+
+`MooX-ClassAttribute 0.005 cpan:TOBYINK`
+	issued  2013-01-05;
+	changeset [
+		item "Avoid triggering Sub::Exporter::Progressive's dependency on Sub::Exporter."^^Bugfix;
+	].
