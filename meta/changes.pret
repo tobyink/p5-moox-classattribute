@@ -27,3 +27,9 @@
 	changeset [
 		item "Avoid triggering Sub::Exporter::Progressive's dependency on Sub::Exporter."^^Bugfix;
 	].
+
+`MooX-ClassAttribute 0.006 cpan:TOBYINK`
+	issued  2013-01-11;
+	changeset [
+		item "Avoid triggering an 'in cleanup' error on some older versions of Perl."^^Bugfix;
+	].
