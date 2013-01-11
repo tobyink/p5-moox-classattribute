@@ -173,7 +173,8 @@ sub on_inflation (&;$)
 	use overload qw[bool] => sub { 0 };
 	sub DESTROY {
 		'Moo::Role'->apply_single_role_to_package('Moo::HandleMoose', MooX::CaptainHook::ON_INFLATION)
-			unless Role::Tiny::does_role('Moo::HandleMoose', MooX::CaptainHook::ON_INFLATION);
+			if Moo::HandleMoose->can('inject_real_metaclass_for')
+			&& !Role::Tiny::does_role('Moo::HandleMoose', MooX::CaptainHook::ON_INFLATION);
 	}
 	if ($Moo::HandleMoose::SETUP_DONE)
 		{ __PACKAGE__->DESTROY }
