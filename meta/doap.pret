@@ -8,7 +8,7 @@
 	:homepage             <https://metacpan.org/release/MooX-ClassAttribute>;
 	:download-page        <https://metacpan.org/release/MooX-ClassAttribute>;
 	:bug-database         <http://rt.cpan.org/Dist/Display.html?Queue=MooX-ClassAttribute>;
-	:repository           [ a :HgRepository; :browse <https://bitbucket.org/tobyink/p5-moox-classattribute> ];
+	:repository           [ a :GitRepository; :browse <https://github.com/tobyink/p5-moox-classattribute> ];
 	:created              2012-12-27;
 	:license              <http://dev.perl.org/licenses/>;
 	:maintainer           cpan:TOBYINK;
