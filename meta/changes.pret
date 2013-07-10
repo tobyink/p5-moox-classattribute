@@ -39,7 +39,7 @@
 	changeset [
 		item [
 			a dcs:Bugfix;
-			label "Fixed error: Can't call method "isa" on an undefined value at MooX/CaptainHook.pm line 27.";
+			label "Fixed error: Can't call method \"isa\" on an undefined value at MooX/CaptainHook.pm line 27.";
 			dcs:fixes RT#86828;
 			dcs:blame cpan:DREBOLO;
 		];
