@@ -6,9 +6,10 @@ cpan:TOBYINK
 	:name  "Toby Inkster";
 	:mbox  <mailto:tobyink@cpan.org>.
 
+RT#86828 dbug:reporter cpan:MAUKE .
+
 cpan:MAUKE
-	:name  "Lukas Mai";
-	is dbug:reporter of RT#86828 .
+	:name  "Lukas Mai".
 
 cpan:DREBOLO
 	:name  "Dinis Rebolo".
