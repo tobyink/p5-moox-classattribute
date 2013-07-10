@@ -23,8 +23,9 @@ sub is_role
 	require Role::Tiny;
 	return !!1 if exists $Role::Tiny::INFO{$package};
 	return !!0 if exists $Moo::MAKERS{$package};
-	if ($INC{'Class/MOP.pm'} and my $classof = 'Class::MOP'->can('class_of') and 'Class::MOP'->can('class_of')->($package)) {
-		return !!1 if $classof->($package)->isa('Moose::Meta::Role');
+	if ($INC{'Class/MOP.pm'} and my $classof = 'Class::MOP'->can('class_of')) {
+		my $meta = $classof->($package);
+		return !!1 if $meta && $meta->isa('Moose::Meta::Role');
 	}
 	return !!0;
 }
