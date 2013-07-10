@@ -6,7 +6,7 @@ use warnings;
 
 BEGIN {
 	$MooX::ClassAttribute::HandleMoose::AUTHORITY = 'cpan:TOBYINK';
-	$MooX::ClassAttribute::HandleMoose::VERSION   = '0.006';
+	$MooX::ClassAttribute::HandleMoose::VERSION   = '0.007';
 }
 
 {

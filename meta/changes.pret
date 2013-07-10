@@ -33,3 +33,18 @@
 	changeset [
 		item "Avoid triggering an 'in cleanup' error on some older versions of Perl."^^Bugfix;
 	].
+
+`MooX-ClassAttribute 0.007 cpan:TOBYINK`
+	issued  2013-07-10;
+	changeset [
+		item [
+			a dcs:Bugfix;
+			label "Fixed error: Can't call method "isa" on an undefined value at MooX/CaptainHook.pm line 27.";
+			dcs:fixes RT#86828;
+			dcs:blame cpan:DREBOLO;
+		];
+		item [
+			a dcs:Documentation;
+			label "Note incompatibility with Moo 1.001000.";
+		];
+	].
