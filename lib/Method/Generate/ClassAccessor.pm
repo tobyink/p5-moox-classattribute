@@ -99,6 +99,11 @@ This class overrides the following methods:
 
 =back
 
+=head1 CAVEATS
+
+B<< Moo 1.001000 has a bug that breaks this module. >>
+Any other Moo should be fine and dandy.
+
 =head1 BUGS
 
 Please report any bugs to
