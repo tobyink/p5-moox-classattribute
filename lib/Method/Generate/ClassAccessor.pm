@@ -29,13 +29,19 @@ sub generate_method
 			no strict 'refs';
 			\%{"$spec->{_classy}\::__ClassAttributeValues"};
 		};
-		if (my $default = $spec->{default})
+		
+		my $default;
+		if (ref($default = $spec->{default}))
 		{
 			$storage->{$name} = $default->($into);
 		}
-		elsif (my $builder = $spec->{builder})
+		elsif ($default = $spec->{default})
 		{
-			$storage->{$name} = $into->$builder;
+			$storage->{$name} = $default;
+		}
+		elsif ($default = $spec->{builder})
+		{
+			$storage->{$name} = $into->$default;
 		}
 	}
 	
