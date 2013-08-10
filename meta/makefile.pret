@@ -1,12 +1,12 @@
 # This file provides instructions for packaging.
 
+@prefix : <http://ontologi.es/doap-deps#> .
+
 `MooX-ClassAttribute`
-	perl_version_from m`MooX::ClassAttribute`;
-	version_from      m`MooX::ClassAttribute`;
-	readme_from       m`MooX::ClassAttribute`;
-	requires          p`Moo 1.000000`;
-	recommends        p`MooseX::ClassAttribute 0`;
-	requires          p`Role::Tiny 0`;
-	requires          p`Sub::Exporter::Progressive 0`;
+	:runtime-requirement    [ :on "Moo 1.000000"^^:CpanId ];
+	:runtime-requirement    [ :on "Role::Tiny 1.000000"^^:CpanId ];
+	:runtime-requirement    [ :on "Sub::Exporter::Progressive"^^:CpanId ];
+	:runtime-recommendation [ :on "MooseX::ClassAttribute"^^:CpanId ];
+	:develop-requirement    [ :on "MooseX::ClassAttribute"^^:CpanId ];
 	.
 
