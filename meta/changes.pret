@@ -48,3 +48,22 @@
 			label "Note incompatibility with Moo 1.001000.";
 		];
 	].
+
+`MooX-ClassAttribute 0.007 cpan:TOBYINK`
+	issued  2013-07-10;
+	changeset [
+		item [
+			a dcs:Bugfix;
+			label "Support non-coderef defaults.";
+			dcs:fixes RT#87638;
+			dcs:thanks [
+				a foaf:Person;
+				foaf:name "Rob Bloodgood";
+				foaf:mbox <mailto:rob@exitexchange.com>;
+			];
+		];
+		item [
+			a dcs:Packaging;
+			label "Switch to Dist::Inkt.";
+		];
+	].
