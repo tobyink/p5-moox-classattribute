@@ -7,6 +7,9 @@
 	:runtime-requirement    [ :on "Role::Tiny 1.000000"^^:CpanId ];
 	:runtime-requirement    [ :on "Sub::Exporter::Progressive"^^:CpanId ];
 	:runtime-recommendation [ :on "MooseX::ClassAttribute"^^:CpanId ];
+	:develop-requirement    [ :on "Moose"^^:CpanId ];
 	:develop-requirement    [ :on "MooseX::ClassAttribute"^^:CpanId ];
+	:develop-requirement    [ :on "Sub::Exporter"^^:CpanId ];
+	:develop-recommendation [ :on "Dist::Inkt"^^:CpanId ];
 	.
 
