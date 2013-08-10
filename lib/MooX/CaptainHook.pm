@@ -187,6 +187,12 @@ sub on_inflation (&;$)
 
 __END__
 
+=pod
+
+=encoding utf8
+
+=for stopwords MooX metaclass
+
 =head1 NAME
 
 MooX::CaptainHook - hooks for MooX modules
@@ -250,7 +256,7 @@ Returns a boolean indicating whether the package is a role.
 
 =back
 
-Within callback codeblocks, C<< $_ >> is also available as a convenient
+Within callback code blocks, C<< $_ >> is also available as a convenient
 alias to C<< $_[0][0] >>.
 
 =head2 Installing Hooks for Other Packages
