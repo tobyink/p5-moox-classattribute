@@ -38,5 +38,15 @@ is(Foo->foo, 42);
 
 is(Bar->bar, "Elephant");
 
+{
+	package Baz;
+	use Moo;
+	use MooX::ClassAttribute;
+	extends 'Bar';
+	class_has baz => ( is => 'rw', default => "Monkey" );
+}
+
+is(Baz->baz, "Monkey");
+
 diag "*** The Moose awakes!!" if $INC{'Moose.pm'};
 done_testing;
