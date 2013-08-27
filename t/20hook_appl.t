@@ -32,6 +32,11 @@ my @output;
 }
 
 {
+	package Local::EmptyRole;
+	use Moo::Role;
+}
+
+{
 	package Local::OtherRole;
 	use Moo::Role;
 	with 'Local::Role'; # "Local::Role applied to Local::OtherRole"
@@ -45,11 +50,18 @@ my @output;
 	1;
 }
 
+{
+	package Local::OtherClass;
+	use Moo;
+	with 'Local::Role', 'Local::EmptyRole';
+}
+
 is_deeply(
 	\@output,
 	[
 		"Local::OtherRole Local::Role",
 		"Local::Class Local::OtherRole",
+		"Local::OtherClass Local::Role",
 	],
 );
 
