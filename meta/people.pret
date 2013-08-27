@@ -11,5 +11,8 @@ RT#86828 dbug:reporter cpan:MAUKE .
 cpan:MAUKE
 	:name  "Lukas Mai".
 
+cpan:HAARG
+	:name  "Graham Knop".
+
 cpan:DREBOLO
 	:name  "Dinis Rebolo".

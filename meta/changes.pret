@@ -67,3 +67,13 @@
 			label "Switch to Dist::Inkt.";
 		];
 	].
+
+`MooX-ClassAttribute 0.009 cpan:TOBYINK`
+	issued  2013-08-27;
+	changeset [
+		item [
+			a dcs:Bugfix;
+			label "Fix MooX::CaptainHook's `on_application` hook to work with recent versions of Moo::Role/Role::Tiny which do not always call `apply_single_role_to_package`.";
+			dcs:thanks cpan:HAARG;
+		];
+	].
