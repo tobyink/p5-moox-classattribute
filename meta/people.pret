@@ -16,3 +16,7 @@ cpan:HAARG
 
 cpan:DREBOLO
 	:name  "Dinis Rebolo".
+
+cpan:ANDK
+	:name  "Andreas J. König".
+
