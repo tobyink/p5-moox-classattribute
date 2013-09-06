@@ -77,3 +77,22 @@
 			dcs:thanks cpan:HAARG;
 		];
 	].
+
+`MooX-ClassAttribute 0.010 cpan:TOBYINK`
+	issued  2013-09-06;
+	changeset [
+		item [
+			a dcs:Bugfix, dcs:Tests;
+			label "Skip test case that requires Moo 1.002000 on older versions of Moo.";
+			dcs:thanks cpan:ANDK;
+			dcs:fixes RT#88459;
+		];
+		item [
+			a dcs:Documentation;
+			label "Correct link to Method::Generate::ClassAccessor in documentation.";
+		];
+		item [
+			a dcs:Packaging;
+			label "Conflict detection for Moo == 1.001000 in Makefile.PL.";
+		];
+	].

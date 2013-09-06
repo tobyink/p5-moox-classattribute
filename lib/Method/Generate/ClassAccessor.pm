@@ -8,7 +8,7 @@ no warnings qw( void once uninitialized numeric );
 BEGIN {
 	no warnings 'once';
 	$Method::Generate::ClassAccessor::AUTHORITY = 'cpan:TOBYINK';
-	$Method::Generate::ClassAccessor::VERSION   = '0.009';
+	$Method::Generate::ClassAccessor::VERSION   = '0.010';
 }
 
 use B 'perlstring';
