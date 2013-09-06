@@ -174,7 +174,7 @@ scare you though; I'm usually pretty quick to fix bugs once they're reported.
 Please report any bugs to
 L<http://rt.cpan.org/Dist/Display.html?Queue=MooX-ClassAttribute>.
 
-See also: L<Method::Generate::ClassAttribute/CAVEATS>.
+See also: L<Method::Generate::ClassAccessor/CAVEATS>.
 
 =head1 SEE ALSO
 
