@@ -38,15 +38,20 @@ is(Foo->foo, 42);
 
 is(Bar->bar, "Elephant");
 
+SKIP:
 {
-	package Baz;
-	use Moo;
-	use MooX::ClassAttribute;
-	extends 'Bar';
-	class_has baz => ( is => 'rw', default => "Monkey" );
-}
+	skip "this test requires Moo 1.002000", 1 if Moo->VERSION < 1.002000;
+	
+	{
+		package Baz;
+		use Moo;
+		use MooX::ClassAttribute;
+		extends 'Bar';
+		class_has baz => ( is => 'rw', default => "Monkey" );
+	}
 
-is(Baz->baz, "Monkey");
+	is(Baz->baz, "Monkey");
+};
 
 diag "*** The Moose awakes!!" if $INC{'Moose.pm'};
 done_testing;
