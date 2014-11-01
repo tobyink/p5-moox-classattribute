@@ -9,7 +9,7 @@ use Exporter::Shiny qw/ on_application on_inflation is_role /;
 BEGIN {
 	no warnings 'once';
 	$MooX::CaptainHook::AUTHORITY = 'cpan:TOBYINK';
-	$MooX::CaptainHook::VERSION   = '0.010';
+	$MooX::CaptainHook::VERSION   = '0.011';
 }
 
 our %on_application;
@@ -47,7 +47,7 @@ use constant ON_APPLICATION => do {
 	BEGIN {
 		no warnings 'once';
 		$MooX::CaptainHook::OnApplication::AUTHORITY = 'cpan:TOBYINK';
-		$MooX::CaptainHook::OnApplication::VERSION   = '0.010';
+		$MooX::CaptainHook::OnApplication::VERSION   = '0.011';
 	}
 	use Moo::Role;
 	after apply_roles_to_package => sub
@@ -93,7 +93,7 @@ sub _inflated
 				BEGIN {
 					no warnings 'once';
 					$MooX::CaptainHook::OnApplication::Moose::AUTHORITY = 'cpan:TOBYINK';
-					$MooX::CaptainHook::OnApplication::Moose::VERSION   = '0.010';
+					$MooX::CaptainHook::OnApplication::Moose::VERSION   = '0.011';
 				}
 				use Moose::Role;
 				after apply => sub {
@@ -140,7 +140,7 @@ use constant ON_INFLATION => do {
 	BEGIN {
 		no warnings 'once';
 		$MooX::CaptainHook::OnInflation::AUTHORITY = 'cpan:TOBYINK';
-		$MooX::CaptainHook::OnInflation::VERSION   = '0.010';
+		$MooX::CaptainHook::OnInflation::VERSION   = '0.011';
 	}
 	use Moo::Role;
 	around inject_real_metaclass_for => sub
@@ -172,7 +172,7 @@ sub on_inflation (&;$)
 {
 	package MooX::CaptainHook::HandleMoose::Hack;
 	our $AUTHORITY = 'cpan:TOBYINK';
-	our $VERSION   = '0.010';
+	our $VERSION   = '0.011';
 	use overload qw[bool] => sub { 0 };
 	sub DESTROY {
 		'Moo::Role'->apply_single_role_to_package('Moo::HandleMoose', MooX::CaptainHook::ON_INFLATION)

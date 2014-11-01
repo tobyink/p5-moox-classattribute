@@ -20,3 +20,9 @@ cpan:DREBOLO
 cpan:ANDK
 	:name  "Andreas J. König".
 
+cpan:BOFTX
+	:name  "Jim Bacon".
+
+<urn:uuid:0252a506-8e0c-4d54-87f7-e0ba3201f25e>
+	a      foaf:Organization;
+	:name  "cPanel, Inc.".

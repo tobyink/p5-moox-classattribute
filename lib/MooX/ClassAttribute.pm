@@ -6,7 +6,7 @@ use warnings;
 
 BEGIN {
 	$MooX::ClassAttribute::AUTHORITY = 'cpan:TOBYINK';
-	$MooX::ClassAttribute::VERSION   = '0.010';
+	$MooX::ClassAttribute::VERSION   = '0.011';
 }
 
 use Carp;

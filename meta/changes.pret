@@ -96,3 +96,17 @@
 			label "Conflict detection for Moo == 1.001000 in Makefile.PL.";
 		];
 	].
+
+`MooX-ClassAttribute 0.011 cpan:TOBYINK`
+	issued  2014-11-01;
+	changeset [
+		item [
+			a dcs:Change;
+			label "Use Exporter::Shiny instead of Sub::Exporter::Progressive.";
+		];
+		item [
+			a dcs:Packaging;
+			label "Don't make Moose/MooseX::ClassAttribute runtime recommendations or development requirements.";
+			dcs:thanks <urn:uuid:0252a506-8e0c-4d54-87f7-e0ba3201f25e>, cpan:BOFTX;
+		];
+	].
