@@ -3,6 +3,7 @@
 @prefix : <http://ontologi.es/doap-deps#> .
 
 `MooX-ClassAttribute`
+	:runtime-requirement    [ :on "perl 5.008000"^^:CpanId ];
 	:runtime-requirement    [ :on "Moo 1.000000"^^:CpanId ];
 	:runtime-conflict       [ :on "Moo == 1.001000"^^:CpanId ];
 	:runtime-conflict       [ :on "MooseX::ClassAttribute <= 0.26"^^:CpanId ];
