@@ -7,8 +7,7 @@
 	:runtime-conflict       [ :on "Moo == 1.001000"^^:CpanId ];
 	:runtime-conflict       [ :on "MooseX::ClassAttribute <= 0.26"^^:CpanId ];
 	:runtime-requirement    [ :on "Role::Tiny 1.000000"^^:CpanId ];
-	:runtime-requirement    [ :on "Sub::Exporter::Progressive"^^:CpanId ];
-	:develop-requirement    [ :on "Sub::Exporter"^^:CpanId ];
+	:runtime-requirement    [ :on "Exporter::Shiny"^^:CpanId ];
 	:develop-recommendation [ :on "Dist::Inkt"^^:CpanId ];
 	.
 

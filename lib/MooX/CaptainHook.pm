@@ -4,9 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 
-use Sub::Exporter::Progressive -setup => {
-	exports => [qw/ on_application on_inflation is_role /],
-};
+use Exporter::Shiny qw/ on_application on_inflation is_role /;
 
 BEGIN {
 	no warnings 'once';
