@@ -50,24 +50,26 @@ use constant ON_APPLICATION => do {
 		$MooX::CaptainHook::OnApplication::VERSION   = '0.011';
 	}
 	use Moo::Role;
-	after apply_roles_to_package => sub
+	around role_application_steps => sub
 	{
-		my ($toolage, $package, @roles) = @_;
-		
-		for my $role (@roles)
-		{
-			'MooX::CaptainHook'->_fire(
-				$on_application{$role},
-				"OnApplication: $package $role",
-				[ $package, $role ],
-			);
-			
-			# This stuff is for internals...
-			push @{ $on_application{$package} ||= [] }, @{ $on_application{$role} || [] }
-				if MooX::CaptainHook::is_role($package);
-			push @{ $on_inflation{$package} ||= [] }, @{ $on_inflation{$role} || [] };
-		}
+		my ( $orig, $self, @args ) = @_;
+		$self->$orig( @args ), '_apply_captain_hook';
 	};
+
+	sub _apply_captain_hook {
+		my ( $toolage, $package, $role ) = @_;
+		'MooX::CaptainHook'->_fire(
+			$on_application{$role},
+			"OnApplication: $package $role",
+			[ $package, $role ],
+		);
+
+	# This stuff is for internals...
+		push @{ $on_application{$package} ||= [] }, @{ $on_application{$role} || [] }
+			if MooX::CaptainHook::is_role($package);
+		push @{ $on_inflation{$package} ||= [] }, @{ $on_inflation{$role} || [] };
+	}
+
 	__PACKAGE__;
 };
 
