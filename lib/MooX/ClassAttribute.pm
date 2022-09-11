@@ -64,6 +64,7 @@ sub import
 	$me->_setup_inflation($target);
 }
 
+our %ROLE_APPLIED_TO_CLASS;
 sub _process_for_role
 {
 	my ($me, $target, $name, $spec) = @_;
@@ -72,6 +73,8 @@ sub _process_for_role
 		$me
 			-> _class_accessor_maker_for($applied_to)
 			-> generate_method($applied_to, $name, $spec);
+		push @{ $ROLE_APPLIED_TO_CLASS{$target} ||= [] }, $applied_to;
+		$me->_setup_inflation($applied_to);
 	} $target;
 	'Moo::Role'->_maybe_reset_handlemoose($target);
 }
@@ -90,7 +93,7 @@ sub _setup_inflation
 	my ($me, $target) = @_;
 	on_inflation {
 		require MooX::ClassAttribute::HandleMoose;
-		$me->_on_inflation($target, @_)
+		$me->_on_inflation($target, @_);
 	} $target;
 }
 

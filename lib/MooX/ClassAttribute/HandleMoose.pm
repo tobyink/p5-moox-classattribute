@@ -15,12 +15,15 @@ BEGIN {
 	our %ROLE;
 	our %CLASS;
 	our %ATTRIBUTES;
+	our %ROLE_APPLIED_TO_CLASS;
 	
 	my $warning;
 	sub _on_inflation
 	{
 		my ($me, $target, $args) = @_;
 		my $meta = $args->[0];
+		
+		warn "INFLATING $target";
 		
 		eval { require MooseX::ClassAttribute }
 			or do { carp <<WARNING unless $warning++; return };
@@ -34,6 +37,7 @@ WARNING
 		require Moose::Util::MetaRole;
 		if ( is_role($meta->name) )
 		{
+			warn "it's a role";
 			$meta = Moose::Util::MetaRole::apply_metaroles(
 				for             => $meta->name,
 				role_metaroles  => {
@@ -45,6 +49,7 @@ WARNING
 		}
 		else
 		{
+			warn "it's a class";
 			$meta = Moose::Util::MetaRole::apply_metaroles(
 				for             => $meta->name,
 				class_metaroles => {
@@ -58,11 +63,22 @@ WARNING
 		{
 			my $name = $attrs->[$i+0];
 			my $spec = $attrs->[$i+1];
+			warn "dealing with attribute $name";
 			MooseX::ClassAttribute::class_has(
 				$meta,
 				$name,
 				$me->_sanitize_spec($name, $spec),
 			);
+			for my $class ( @{ $ROLE_APPLIED_TO_CLASS{$meta->name} || [] } ) {
+				Moose::Util::MetaRole::apply_metaroles(
+					for             => $class->meta,
+					class_metaroles => {
+						class => ['MooseX::ClassAttribute::Trait::Class'] #,'MooseX::ClassAttribute::Hack']
+					},
+				);
+				$class->meta->add_class_attribute($meta->get_class_attribute($_))
+					for eval { $meta->get_class_attribute_list };
+			}
 		}
 		
 		$args->[0] = $meta; # return new $meta

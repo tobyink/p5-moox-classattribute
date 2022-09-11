@@ -36,7 +36,7 @@ use Test::More;
 
 WithFoo->foo(42);
 eval { require Moose } or plan skip_all => 'need Moose';
-is(WithFoo->foo, 42);
+is(WithFoo->foo, 42, 'WithFoo class attribute WORKS');
 
 {
 	package Bar;
@@ -51,7 +51,7 @@ is(WithFoo->foo, 42);
 	with 'Bar';
 }
 
-is(WithBar->bar, "WithBar XYZ");
+is(WithBar->bar, "WithBar XYZ", 'WithBar class attribute WORKS');
 
 unless (eval { require MooseX::ClassAttribute })
 {
@@ -66,20 +66,30 @@ my $_meta = sub {
 	Class::MOP::class_of($pkg);
 };
 
-can_ok(Foo->$_meta, 'get_class_attribute');
-ok(Foo->$_meta->get_class_attribute('foo'));
-ok(not Foo->$_meta->get_class_attribute('foo')->has_default);
+$_->meta->name for qw( Foo WithFoo Bar WithBar );
 
-can_ok(Bar->$_meta, 'get_class_attribute');
-ok(Bar->$_meta->get_class_attribute('bar'));
-ok(Bar->$_meta->get_class_attribute('bar')->has_default);
+subtest "Foo role meta" => sub {
+	can_ok(Foo->$_meta, 'get_class_attribute');
+	ok(Foo->$_meta->get_class_attribute('foo'));
+	ok(not Foo->$_meta->get_class_attribute('foo')->has_default);
+};
 
-can_ok(WithFoo->meta, 'get_class_attribute');
-ok(WithFoo->meta->get_class_attribute('foo'));
-ok(not WithFoo->meta->get_class_attribute('foo')->has_default);
+subtest "Bar role meta" => sub {
+	can_ok(Bar->$_meta, 'get_class_attribute');
+	ok(Bar->$_meta->get_class_attribute('bar'));
+	ok(Bar->$_meta->get_class_attribute('bar')->has_default);
+};
 
-can_ok(WithBar->meta, 'get_class_attribute');
-ok(WithBar->meta->get_class_attribute('bar'));
-ok(WithBar->meta->get_class_attribute('bar')->has_default);
+subtest "WithFoo class meta" => sub {
+	can_ok(WithFoo->meta, 'get_class_attribute');
+	ok(WithFoo->meta->get_class_attribute('foo'));
+	ok(not WithFoo->meta->get_class_attribute('foo')->has_default);
+};
+
+subtest "WithBar class meta" => sub {
+	can_ok(WithBar->meta, 'get_class_attribute');
+	ok(WithBar->meta->get_class_attribute('bar'));
+	ok(WithBar->meta->get_class_attribute('bar')->has_default);
+};
 
 done_testing;

@@ -48,6 +48,8 @@ unless (eval { require MooseX::ClassAttribute })
 	exit;
 }
 
+$_->meta->name for qw( Foo Bar );
+
 can_ok(Foo->meta, 'get_class_attribute');
 ok(Foo->meta->get_class_attribute('foo'));
 ok(not Foo->meta->get_class_attribute('foo')->has_default);
