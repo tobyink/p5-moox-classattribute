@@ -15,6 +15,15 @@ use B 'perlstring';
 
 use base qw(Method::Generate::Accessor);
 
+my $fill_tpl = sub {
+    my ( $package, $expr, $name ) = @_;
+    $name = perlstring $name;
+    my $tpl = qq[ do { package $package; use vars '%CA'; $expr;} ];
+    $tpl =~ s/\%CA/\%__ClassAttributeValues/g;
+    $tpl =~ s/\$CA/\$__ClassAttributeValues{$name}/g;
+    $tpl;
+};
+
 sub generate_method
 {
 	my ($self, $into, $name, $spec, $quote_opts) = @_;
@@ -27,7 +36,7 @@ sub generate_method
 	{
 		my $storage = do {
 			no strict 'refs';
-			\%{"$spec->{_classy}\::__ClassAttributeValues"};
+                    eval $fill_tpl->( $spec->{_classy}, '\%CA' );
 		};
 		
 		my $default;
@@ -52,28 +61,28 @@ sub _generate_simple_get
 {
 	my ($self, $me, $name, $spec) = @_;
 	my $classy = $spec->{_classy};
-	"\$$classy\::__ClassAttributeValues{${\perlstring $name}}";
+	$fill_tpl->( $classy, '$CA', $name);
 }
 
 sub _generate_core_set
 {
 	my ($self, $me, $name, $spec, $value) = @_;
 	my $classy = $spec->{_classy};
-	"\$$classy\::__ClassAttributeValues{${\perlstring $name}} = $value";
+	$fill_tpl->( $classy, '$CA = ' . $value, $name);
 }
 
 sub _generate_simple_has
 {
 	my ($self, $me, $name, $spec) = @_;
 	my $classy = $spec->{_classy};
-	"exists \$$classy\::__ClassAttributeValues{${\perlstring $name}}";
+	$fill_tpl->( $classy, 'exists $CA', $name);
 }
 
 sub _generate_simple_clear
 {
 	my ($self, $me, $name, $spec) = @_;
 	my $classy = $spec->{_classy};
-	"delete \$$classy\::__ClassAttributeValues{${\perlstring $name}}";
+	$fill_tpl->( $classy, 'delete $CA', $name);
 }
 
 1;
